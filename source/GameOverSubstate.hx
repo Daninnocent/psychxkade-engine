@@ -14,6 +14,28 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var stageSuffix:String = "";
 
+	public static var characterName:String = 'bf';
+	public static var deathSoundName:String = 'fnf_loss_sfx';
+	public static var loopSoundName:String = 'gameOver';
+	public static var endSoundName:String = 'gameOverEnd';
+
+	public static var instance:GameOverSubstate;
+
+	public static function resetVariables() {
+		characterName = 'bf';
+		deathSoundName = 'fnf_loss_sfx';
+		loopSoundName = 'gameOver';
+		endSoundName = 'gameOverEnd';
+	}
+
+	override function create()
+	{
+		instance = this;
+		PlayState.instance.callOnLuas('onGameOverStart', []);
+
+		super.create();
+	}
+
 	public function new(x:Float, y:Float)
 	{
 		var daStage = PlayState.curStage;
@@ -31,13 +53,15 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		Conductor.songPosition = 0;
 
-		bf = new Boyfriend(x, y, daBf);
+		bf = new Boyfriend(x, y, characterName);
+		bf.x += bf.positionArray[0];
+		bf.y += bf.positionArray[1];
 		add(bf);
 
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
-		FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
+		FlxG.sound.play(Paths.sound(deathSoundName));
 		Conductor.changeBPM(100);
 
 		// FlxG.camera.followLerp = 1;
@@ -51,6 +75,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+
+		PlayState.instance.callOnLuas('onUpdate', [elapsed]);
 
 		if (controls.ACCEPT)
 		{
@@ -75,13 +101,14 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
 		{
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
+			coolStartDeath();
 		}
 
 		if (FlxG.sound.music.playing)
 		{
 			Conductor.songPosition = FlxG.sound.music.time;
 		}
+		PlayState.instance.callOnLuas('onUpdatePost', [elapsed]);
 	}
 
 	override function beatHit()
@@ -92,6 +119,12 @@ class GameOverSubstate extends MusicBeatSubstate
 	}
 
 	var isEnding:Bool = false;
+
+	function coolStartDeath(?volume:Float = 1):Void
+	{
+		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
+	}
+
 
 	function endBullshit():Void
 	{

@@ -32,6 +32,7 @@ class Note extends FlxSprite
 	public var gfNote:Bool = false;
 	public var ignoreNote:Bool = false;
 	public var wasGoodHit:Bool = false;
+	public var hitByOpponent:Bool = false;
 	public var prevNote:Note;
 	public var modifiedByLua:Bool = false;
 	public var sustainLength:Float = 0;
@@ -185,7 +186,7 @@ class Note extends FlxSprite
 
 			x -= width / 2;
 
-			if (PlayState.curStage.startsWith('school'))
+			if (PlayState.PlayState.isPixelStage)
 				x += 30;
 
 			if (prevNote.isSustainNote)
@@ -241,7 +242,7 @@ class Note extends FlxSprite
 			switch(PlayState.storyWeek) {case 6: noteTypeCheck = 'pixel';}
 		} else {noteTypeCheck = PlayState.SONG.arrowSkin;}
 
-        if(PlayState.curStage.startsWith('school')) {
+        if(PlayState.PlayState.isPixelStage) {
 				loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels','week6'), true, 17, 17);
 
 				animation.add('greenScroll', [6]);
