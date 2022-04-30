@@ -3,7 +3,9 @@ package;
 import flixel.addons.display.FlxNestedSprite;
 import haxe.display.FsPath;
 import flixel.graphics.FlxGraphic;
+#if cpp
 import webm.WebmPlayer;
+#end 
 import flixel.input.keyboard.FlxKey;
 import haxe.Exception;
 import openfl.geom.Matrix;
