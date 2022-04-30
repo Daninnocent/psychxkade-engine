@@ -8,7 +8,7 @@ import flixel.tweens.FlxEase;
 import flixel.ui.FlxButton;
 import flixel.FlxSprite;
 
-class FlxHitbox extends FlxSpriteGroup {
+class Hitbox extends FlxSpriteGroup {
 	public var hitbox:FlxSpriteGroup;
 
 	public var buttonLeft:FlxButton;
