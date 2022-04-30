@@ -302,36 +302,16 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				// Get current version of Kade Engine
 				
-				var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
-				var returnedData:Array<String> = [];
-				
-				http.onData = function (data:String)
-				{
-					returnedData[0] = data.substring(0, data.indexOf(';'));
-					returnedData[1] = data.substring(data.indexOf('-'), data.length);
-				  	// if (!MainMenuState.kadeEngineVer.contains(returnedData[0].trim()) && !OutdatedSubState.leftState && MainMenuState.nightly == "")
-					// {
-					// 	trace('outdated lmao! ' + returnedData[0] + ' != ' + MainMenuState.kadeEngineVer);
-					// 	OutdatedSubState.needVer = returnedData[0];
-					// 	OutdatedSubState.currChanges = returnedData[1];
-					// 	FlxG.switchState(new OutdatedSubState());
-					// }
-					// else
-					// {
+
+			      FlxG.camera.flash(FlxColor.WHITE, 1);
+			      FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+
 						FlxG.switchState(new MainMenuState());
-					// }
-				}
 				
-				http.onError = function (error) {
-				  trace('error: $error');
-				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
-				}
-				
-				http.request();
+				       FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 			});
-			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
+			
 		}
 
 		if (pressedEnter && !skippedIntro && initialized)
