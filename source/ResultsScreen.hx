@@ -28,7 +28,7 @@ import flixel.input.FlxKeyManager;
 
 using StringTools;
 
-class ResultsScreen extends MusicBeatState 
+class ResultsScreen extends FlxSubState
 {
     public var background:FlxSprite;
     public var text:FlxText;
@@ -157,8 +157,7 @@ class ResultsScreen extends MusicBeatState
 
         cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
         
-        addVirtualPad(NONE, A);
-		addPadCamera();
+        
 		super.create();
 	}
 
