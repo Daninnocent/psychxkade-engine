@@ -3,9 +3,8 @@ package;
 import flixel.addons.display.FlxNestedSprite;
 import haxe.display.FsPath;
 import flixel.graphics.FlxGraphic;
-
 import webm.WebmPlayer;
- 
+import webm.WebmHandler 
 import flixel.input.keyboard.FlxKey;
 import haxe.Exception;
 import openfl.geom.Matrix;
@@ -1161,12 +1160,10 @@ class PlayState extends MusicBeatState
 		if(PlayStateChangeables.botPlay && !loadRep) add(botPlayState);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		iconP1.y = healthBar.y - 75;
-		add(iconP1);
+		//add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		iconP2.y = healthBar.y - 75;
-		add(iconP2);
+		//add(iconP2);
 
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
