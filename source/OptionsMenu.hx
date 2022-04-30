@@ -104,9 +104,8 @@ class OptionsMenu extends MusicBeatState
 
 		FlxTween.tween(versionShit,{y: FlxG.height - 18},2,{ease: FlxEase.elasticInOut});
 		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
-
+                addVirtualPad(FULL, A_B); 
 		super.create();
-		addVirtualPad(FULL, A_B);
 	}
 
 	var isCat:Bool = false;
