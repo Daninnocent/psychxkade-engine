@@ -1168,9 +1168,7 @@ class PlayState extends MusicBeatState
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(dad.healthIcon, false);
-		add(iconP2);
-
+		
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
