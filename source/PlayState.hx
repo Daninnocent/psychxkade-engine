@@ -68,6 +68,7 @@ import DialogueBoxPsych;
 #if mobileC
 import ui.Mobilecontrols;
 #end
+
 #if windows
 import Discord.DiscordClient;
 #end
@@ -80,12 +81,12 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-        #if mobileC
-	var mcontrols:Mobilecontrols; 
-	#end
-
 	public static var instance:PlayState = null;
 
+    #if mobileC
+	var mcontrols:Mobilecontrols; 
+	#end
+	
 	public static var curStage:String = '';
 	public static var SONG:SwagSong = null;
 	public static var isStoryMode:Bool = false;
@@ -1165,10 +1166,10 @@ class PlayState extends MusicBeatState
 		if(PlayStateChangeables.botPlay && !loadRep) add(botPlayState);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
-		//add(iconP1);
+		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
-		//add(iconP2);
+		add(iconP2);
 
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
