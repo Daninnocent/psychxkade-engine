@@ -65,7 +65,9 @@ import StageData;
 import FunkinLua;
 import flixel.util.FlxSave;
 import DialogueBoxPsych;
-
+#if mobileC
+import ui.Mobilecontrols;
+#end
 #if windows
 import Discord.DiscordClient;
 #end
@@ -78,6 +80,10 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+        #if mobileC
+	var mcontrols:Mobilecontrols; 
+	#end
+
 	public static var instance:PlayState = null;
 
 	public static var curStage:String = '';
