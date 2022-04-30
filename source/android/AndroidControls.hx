@@ -13,7 +13,7 @@ class Config {
 
 	public function new() {
 		save = new FlxSave();
-		save.bind("saved-controls");
+		save.bind("saveconrtol");
 	}
 
 	public function getcontrolmode():Int {
@@ -26,6 +26,7 @@ class Config {
 		if (save.data.buttonsmode == null) save.data.buttonsmode = new Array();
 		save.data.buttonsmode[0] = mode;
 		save.flush();
+
 		return save.data.buttonsmode[0];
 	}
 
@@ -33,12 +34,17 @@ class Config {
 		if (save.data.buttons == null)
 		{
 			save.data.buttons = new Array();
-			for (buttons in _pad){
+
+			for (buttons in _pad)
+			{
 				save.data.buttons.push(FlxPoint.get(buttons.x, buttons.y));
 			}
-		}else{
+		}
+		else
+		{
 			var tempCount:Int = 0;
-			for (buttons in _pad){
+			for (buttons in _pad)
+			{
 				save.data.buttons[tempCount] = FlxPoint.get(buttons.x, buttons.y);
 				tempCount++;
 			}
@@ -50,7 +56,8 @@ class Config {
 		if (save.data.buttons == null) 
 			return _pad;
 		var tempCount:Int = 0;
-		for(buttons in _pad){
+
+		for(buttons in _pad) {
 			buttons.x = save.data.buttons[tempCount].x;
 			buttons.y = save.data.buttons[tempCount].y;
 			tempCount++;
@@ -59,7 +66,8 @@ class Config {
 	}
 }
 
-class AndroidControls extends FlxSpriteGroup {
+class AndroidControls extends FlxSpriteGroup
+{
 	public var mode:ControlsGroup = HITBOX;
 
 	public var hbox:FlxHitbox;
@@ -67,14 +75,16 @@ class AndroidControls extends FlxSpriteGroup {
 
 	var config:Config;
 
-	public function new() {
+	public function new() 
+	{
 		super();
-
+		
 		config = new Config();
 
 		mode = getModeFromNumber(config.getcontrolmode());
 
-		switch (mode){
+		switch (mode)
+		{
 			case VIRTUALPAD_RIGHT:
 				initControler(0);
 			case VIRTUALPAD_LEFT:
@@ -85,36 +95,46 @@ class AndroidControls extends FlxSpriteGroup {
 				initControler(3);
 			case HITBOX:
 				initControler(4);
-			case KEYBOARD:// nothing
+			case KEYBOARD:
+				// do nothing
 		}
 	}
 
-	function initControler(vpadMode:Int) {
-		switch (vpadMode){
+	function initControler(vpadMode:Int) 
+	{
+		switch (vpadMode)
+		{
 			case 0:
-				vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);	
+				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);	
+				vpad.alpha = 0.75;
 				add(vpad);						
 			case 1:
-				vpad = new FlxVirtualPad(FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
+				vpad = new FlxVirtualPad(FULL, NONE);
+				vpad.alpha = 0.75;
 				add(vpad);			
 			case 2:
-				vpad = new FlxVirtualPad(FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);
+				vpad = new FlxVirtualPad(FULL, NONE);
 				vpad = config.loadcustom(vpad);
+				vpad.alpha = 0.75;
 				add(vpad);	
 			case 3:
-				vpad = new FlxVirtualPad(DUO, NONE, 0.75, ClientPrefs.globalAntialiasing);
+				vpad = new FlxVirtualPad(DUO, NONE);
+				vpad.alpha = 0.75;
 				add(vpad);		
 			case 4:
-				hbox = new FlxHitbox(0.75, ClientPrefs.globalAntialiasing);
+				hbox = new FlxHitbox();
 				add(hbox);		
 			default:
-				vpad = new FlxVirtualPad(RIGHT_FULL, NONE, 0.75, ClientPrefs.globalAntialiasing);	
+				vpad = new FlxVirtualPad(RIGHT_FULL, NONE);	
+				vpad.alpha = 0.75;
 				add(vpad);					
 		}
 	}
 
+
 	public static function getModeFromNumber(modeNum:Int):ControlsGroup {
-		return switch (modeNum){
+		return switch (modeNum)
+		{
 			case 0: 
 				VIRTUALPAD_RIGHT;
 			case 1: 
