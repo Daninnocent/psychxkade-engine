@@ -1,5 +1,9 @@
 package;
 
+import flixel.group.FlxGroup;
+import ui.Hitbox;
+import ui.FlxVirtualPad;
+import flixel.ui.FlxButton;
 import flixel.FlxG;
 import flixel.input.FlxInput;
 import flixel.input.actions.FlxAction;
@@ -10,12 +14,6 @@ import flixel.input.actions.FlxActionSet;
 import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
-#if android
-import flixel.group.FlxGroup;
-import android.FlxHitbox;
-import android.FlxVirtualPad;
-import flixel.ui.FlxButton;
-#end
 
 
 #if (haxe >= "4.0.0")
@@ -273,7 +271,6 @@ class Controls extends FlxActionSet
 	}
 	#end
 	
-	#if android
 	public var trackedinputs:Array<FlxActionInput> = [];
 
 	public function addbutton(action:FlxActionDigital, button:FlxButton, state:FlxInputState) {
@@ -281,18 +278,19 @@ class Controls extends FlxActionSet
 		trackedinputs.push(input);
 		
 		action.add(input);
+		//action.addInput(button, state);
 	}
-
-	public function setHitBox(hitbox:FlxHitbox) 
+	
+	public function setHitBox(hitbox:Hitbox) 
 	{
 		inline forEachBound(Control.UP, (action, state) -> addbutton(action, hitbox.buttonUp, state));
 		inline forEachBound(Control.DOWN, (action, state) -> addbutton(action, hitbox.buttonDown, state));
 		inline forEachBound(Control.LEFT, (action, state) -> addbutton(action, hitbox.buttonLeft, state));
 		inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, hitbox.buttonRight, state));	
 	}
+
 	
-	public function setVirtualPad(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) 
-	{
+	public function setVirtualPad(virtualPad:FlxVirtualPad, ?DPad:FlxDPadMode, ?Action:FlxActionMode) {
 		if (DPad == null)
 			DPad = NONE;
 		if (Action == null)
@@ -314,17 +312,8 @@ class Controls extends FlxActionSet
 				inline forEachBound(Control.UP, (action, state) -> addbutton(action, virtualPad.buttonUp, state));
 				inline forEachBound(Control.DOWN, (action, state) -> addbutton(action, virtualPad.buttonDown, state));
 				inline forEachBound(Control.LEFT, (action, state) -> addbutton(action, virtualPad.buttonLeft, state));
-				inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, virtualPad.buttonRight, state));	
-			case DUO:
-				inline forEachBound(Control.UP, (action, state) -> addbutton(action, virtualPad.buttonUp, state));
-				inline forEachBound(Control.DOWN, (action, state) -> addbutton(action, virtualPad.buttonDown, state));
-				inline forEachBound(Control.LEFT, (action, state) -> addbutton(action, virtualPad.buttonLeft, state));
-				inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, virtualPad.buttonRight, state));	
-
-				inline forEachBound(Control.UP, (action, state) -> addbutton(action, virtualPad.buttonUp2, state));
-				inline forEachBound(Control.DOWN, (action, state) -> addbutton(action, virtualPad.buttonDown2, state));
-				inline forEachBound(Control.LEFT, (action, state) -> addbutton(action, virtualPad.buttonLeft2, state));
-				inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, virtualPad.buttonRight2, state));                        
+				inline forEachBound(Control.RIGHT, (action, state) -> addbutton(action, virtualPad.buttonRight, state));
+			
 			case NONE:
 		}
 
@@ -332,34 +321,21 @@ class Controls extends FlxActionSet
 		{
 			case A:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
-                        case B:
-				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));
-			case D:
-                                //nothing				
 			case A_B:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
 				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));
 			case A_B_C:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
-				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));					
-			case A_B_E:
-				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
-				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));	
+				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));
 			case A_B_X_Y:
 				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
-				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));		
-			case A_B_C_X_Y:
-				inline forEachBound(Control.ACCEPT, (action, state) -> addbutton(action, virtualPad.buttonA, state));
-				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));	
-                        case A_B_C_X_Y_Z:
-                                //nothing
-                        case FULL:
-                                //nothing
+				inline forEachBound(Control.BACK, (action, state) -> addbutton(action, virtualPad.buttonB, state));
 			case NONE:
 		}
-	}	
+	}
+	
 
-    public function removeFlxInput(Tinputs) {
+	public function removeFlxInput(Tinputs) {
 		for (action in this.digitalActions)
 		{
 			var i = action.inputs.length;
@@ -367,14 +343,30 @@ class Controls extends FlxActionSet
 			while (i-- > 0)
 			{
 				var input = action.inputs[i];
+				/*if (input.device == IFLXINPUT_OBJECT)
+					action.remove(input);*/
 
 				var x = Tinputs.length;
 				while (x-- > 0)
-					if (Tinputs[x] == input)
+					//if (Tinputs[x] == input)
 						action.remove(input);
 			}
 		}
-	}	
+	}
+	
+
+	
+	#if android
+	public function addAndroidBack() {
+		// fix this later
+
+		/*
+		var BACK = #if (openfl >= "8.0.0") 0x4000010E #else 27 #end;
+		_back.addKey(BACK, JUST_RELEASED);
+		_back.addKey(BACK, JUST_PRESSED);
+		_back.addKey(BACK, PRESSED);
+		*/
+	}
 	#end
 
 

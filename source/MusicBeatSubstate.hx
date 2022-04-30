@@ -3,9 +3,9 @@ package;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.FlxSubState;
-#if android
+#if mobileC
+import ui.FlxVirtualPad;
 import flixel.input.actions.FlxActionInput;
-import android.FlxVirtualPad;
 #end
 
 class MusicBeatSubstate extends FlxSubState
@@ -25,12 +25,12 @@ class MusicBeatSubstate extends FlxSubState
 	inline function get_controls():Controls
 		return PlayerSettings.player1.controls;
 		
-	#if android
+    #if mobileC
 	var _virtualpad:FlxVirtualPad;
+
 	var trackedinputs:Array<FlxActionInput> = [];
-	#end
-	
-	#if android
+
+	// adding virtualpad to state
 	public function addVirtualPad(?DPad:FlxDPadMode, ?Action:FlxActionMode) {
 		_virtualpad = new FlxVirtualPad(DPad, Action);
 		_virtualpad.alpha = 0.75;
@@ -38,28 +38,20 @@ class MusicBeatSubstate extends FlxSubState
 		controls.setVirtualPad(_virtualpad, DPad, Action);
 		trackedinputs = controls.trackedinputs;
 		controls.trackedinputs = [];
-	}
-	#else
-	public function addVirtualPad(?DPad, ?Action)
-	#end
 
-        public function addPadCamera() {
 		#if android
-		var camcontrol = new flixel.FlxCamera();
-		FlxG.cameras.add(camcontrol);
-		camcontrol.bgColor.alpha = 0;
-		_virtualpad.cameras = [camcontrol];
+		controls.addAndroidBack();
 		#end
 	}
 	
 	override function destroy() {
-		#if android
 		controls.removeFlxInput(trackedinputs);
-		#end	
-		
+
 		super.destroy();
 	}
-
+	#else
+	public function addVirtualPad(?DPad, ?Action){};
+	#end
 
 	override function update(elapsed:Float)
 	{

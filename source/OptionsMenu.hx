@@ -26,7 +26,6 @@ class OptionsMenu extends MusicBeatState
 	var options:Array<OptionCategory> = [
 		new OptionCategory("Gameplay", [
 			new DFJKOption(controls),
-                        new CustomizeControls("Change The Android Controls."),
 			new DownscrollOption("Change the layout of the strumline."),
 			new GhostTapOption("Ghost Tapping is when you tap a direction and it doesn't give you a miss."),
 			new Judgement("Customize your Hit Timings (LEFT or RIGHT)"),
@@ -61,6 +60,11 @@ class OptionsMenu extends MusicBeatState
 			new WatermarkOption("Enable and disable all watermarks from the engine."),
 			new BotPlay("Showcase your charts and mods with autoplay."),
 			new ScoreScreen("Show the score screen after the end of a song")
+		]), 
+		
+		new OptionCategory("Mobile settings", [
+			new CustomControls("edit a control"),
+			new About("about android port")
 		])
 		
 	];
@@ -76,7 +80,15 @@ class OptionsMenu extends MusicBeatState
 	override function create()
 	{
 		instance = this;
-		
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("menuDesat"));
+
+		menuBG.color = 0xFFea71fd;
+		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
+		menuBG.updateHitbox();
+		menuBG.screenCenter();
+		menuBG.antialiasing = true;
+		add(menuBG);
+
 		grpControls = new FlxTypedGroup<Alphabet>();
 		add(grpControls);
 
@@ -104,7 +116,11 @@ class OptionsMenu extends MusicBeatState
 
 		FlxTween.tween(versionShit,{y: FlxG.height - 18},2,{ease: FlxEase.elasticInOut});
 		FlxTween.tween(blackBorder,{y: FlxG.height - 18},2, {ease: FlxEase.elasticInOut});
-                addVirtualPad(FULL, A_B); 
+		
+		#if mobileC
+        addVirtualPad(UP_DOWN, A_B);
+        #end
+
 		super.create();
 	}
 

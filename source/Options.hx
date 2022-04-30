@@ -72,7 +72,42 @@ class Option
 	public function right():Bool { return throw "stub!"; }
 }
 
+class CustomControls extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.switchState(new options.CustomControlsState());
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "controls";
+	}
 
+}
+class About extends Option
+{
+	public function new(desc:String)
+	{
+		super();
+		description = desc;
+	}
+	public override function press():Bool
+	{
+		FlxG.switchState(new options.AboutState());
+		return true;
+	}
+	private override function updateDisplay():String
+	{
+		return "About";
+	}
+
+}
 
 class DFJKOption extends Option
 {
@@ -673,26 +708,5 @@ class CamZoomOption extends Option
 	private override function updateDisplay():String
 	{
 		return "Camera Zoom " + (!FlxG.save.data.camzoom ? "off" : "on");
-	}
-}
-
-class CustomizeControls extends Option
-{
-	public function new(desc:String)
-	{
-		super();
-		description = desc;
-	}
-
-	public override function press():Bool
-	{
-		trace("switch");
-		FlxG.switchState(new android.AndroidControlsMenu());
-		return false;
-	}
-
-	private override function updateDisplay():String
-	{
-		return "Android Controls";
 	}
 }
