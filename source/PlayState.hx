@@ -4271,9 +4271,7 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add('played imss note');
 
 			var char:Character = boyfriend;
-			if(daNote.gfNote) {
-				char = gf;
-			}
+			
 	
 			if(char.hasMissAnimations)
 			{
@@ -4423,7 +4421,7 @@ class PlayState extends MusicBeatState
 				{
 					if (!note.isSustainNote)
 					{
-						popUpScore(note);
+						//popUpScore(note);
 						combo += 1;
 					}
 					else
