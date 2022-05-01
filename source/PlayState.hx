@@ -1168,8 +1168,8 @@ class PlayState extends MusicBeatState
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 		add(iconP1);
 		
-		iconP2 = new HealthIcon(dad.healthIcon, false);
-		add(iconP2);
+		//iconP2 = new HealthIcon(dad.healthIcon, false);
+		//add(iconP2);
 
 		
 		strumLineNotes.cameras = [camHUD];
@@ -1177,7 +1177,7 @@ class PlayState extends MusicBeatState
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
-		iconP2.cameras = [camHUD];
+		//iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		
@@ -2443,7 +2443,7 @@ class PlayState extends MusicBeatState
 				kadeEngineWatermark.visible = false;
 				healthBar.visible = false;
 				iconP1.visible = false;
-				iconP2.visible = false;
+				//iconP2.visible = false;
 				scoreTxt.visible = false;
 			}
 			else
@@ -2452,7 +2452,7 @@ class PlayState extends MusicBeatState
 				kadeEngineWatermark.visible = true;
 				healthBar.visible = true;
 				iconP1.visible = true;
-				iconP2.visible = true;
+				//iconP2.visible = true;
 				scoreTxt.visible = true;
 			}
 
@@ -2566,15 +2566,15 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);
 
 		iconP1.setGraphicSize(Std.int(FlxMath.lerp(150, iconP1.width, 0.50)));
-		iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
+		//iconP2.setGraphicSize(Std.int(FlxMath.lerp(150, iconP2.width, 0.50)));
 
 		iconP1.updateHitbox();
-		iconP2.updateHitbox();
+		//iconP2.updateHitbox();
 
 		var iconOffset:Int = 26;
 
 		iconP1.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01) - iconOffset);
-		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
+		//iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 
 		if (health > 2)
 			health = 2;
@@ -2584,9 +2584,9 @@ class PlayState extends MusicBeatState
 			iconP1.animation.curAnim.curFrame = 0;
 
 		if (healthBar.percent > 80)
-			iconP2.animation.curAnim.curFrame = 1;
+			//iconP2.animation.curAnim.curFrame = 1;
 		else
-			iconP2.animation.curAnim.curFrame = 0;
+			//iconP2.animation.curAnim.curFrame = 0;
 
 		/* if (FlxG.keys.justPressed.NINE)
 			FlxG.switchState(new Charting()); */
@@ -3445,7 +3445,7 @@ class PlayState extends MusicBeatState
 								gf.visible = false;
 							}
 							dad.alpha = lastAlpha;
-							iconP2.changeIcon(dad.healthIcon);
+							//iconP2.changeIcon(dad.healthIcon);
 						}
 						setOnLuas('dadName', dad.curCharacter);
 
@@ -4787,10 +4787,10 @@ class PlayState extends MusicBeatState
 		}
 
 		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
-		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+		//iconP2.setGraphicSize(Std.int(iconP2.width + 30));
 			
 		iconP1.updateHitbox();
-		iconP2.updateHitbox();
+		//iconP2.updateHitbox();
 
 		if (curBeat % gfSpeed == 0)
 		{
