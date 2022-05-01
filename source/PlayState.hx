@@ -1166,6 +1166,7 @@ class PlayState extends MusicBeatState
 		if(PlayStateChangeables.botPlay && !loadRep) add(botPlayState);
 
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
+		iconP1.y = healthBar.y - 75;
 		add(iconP1);
 		
 		//iconP2 = new HealthIcon(dad.healthIcon, false);
@@ -4067,6 +4068,7 @@ class PlayState extends MusicBeatState
 									mashViolations--;
 								scoreTxt.color = FlxColor.WHITE;
 								goodNoteHit(coolNote);
+								health += 0.1;
 							}
 						}
 					}
@@ -4423,6 +4425,7 @@ class PlayState extends MusicBeatState
 					{
 						//popUpScore(note);
 						combo += 1;
+
 					}
 					else
 						totalNotesHit += 1;
