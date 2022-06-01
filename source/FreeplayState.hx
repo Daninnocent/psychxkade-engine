@@ -193,6 +193,11 @@ class FreeplayState extends MusicBeatState
 		text.setFormat(Paths.font("vcr.ttf"), size, FlxColor.WHITE, RIGHT);
 		text.scrollFactor.set();
 		add(text);
+		
+		#if mobileC
+        addVirtualPad(FULL, A_B);
+        #end
+        
 		super.create();
 	}
 
